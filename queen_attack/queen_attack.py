@@ -10,14 +10,14 @@ import sys
 def queensAttack(n, k, r_q, c_q, obstacles):
 
     moves = 0
-    h_low_list = [0]
-    h_up_list = [0]
-    v_low_list = [0]
-    v_up_list = [0]
-    pos_low_list = [0]
-    pos_up_list = [0]
-    neg_low_list = [0]
-    neg_up_list = [0]
+    h_low_max = 0
+    h_up_max = 0
+    v_low_max = 0
+    v_up_max = 0
+    pos_low_max = 0
+    pos_up_max = 0
+    neg_low_max = 0
+    neg_up_max = 0
 
     if (n <= 0):
         return 0
@@ -42,51 +42,51 @@ def queensAttack(n, k, r_q, c_q, obstacles):
         if (c_q == c_o):
             """ Obstacle in vertical line """
             if (r_o < r_q):
-                v_low_list.append(r_o)
+                v_low_max = max(r_o, v_low_max)
             elif (r_o > r_q):
-                v_up_list.append(n - r_o + 1)
+                v_up_max = max(n - r_o + 1, v_up_max)
             #print("After Obstacles in vertical line %d " % moves)
         elif (r_q == r_o):
             """ Obstacle in horizontal line """
             if (c_o < c_q):
-                h_low_list.append(c_o)
+                h_low_max = max(c_o, h_low_max)
             elif (c_o > c_q):
-                h_up_list.append(n - c_o + 1)
+                h_up_max = max(n - c_o + 1, h_up_max)
             #print("After Obstacles in horizontal line %d " % moves)
         elif ((c_o - r_o) == (c_q - r_q)):
-            """ Obstacle in positive diagonal line """
+            """ Obstacle in positive slope diagonal line """
             if (c_q > r_q):
                 if (c_o < c_q):
-                    pos_low_list.append(r_o)
+                    pos_low_max = max(r_o, pos_low_max)
                 elif (c_o > c_q):
-                    pos_up_list.append(n - c_o + 1)
+                    pos_up_max = max(n - c_o + 1, pos_up_max)
             elif (c_q <= r_q):
                 if (c_o < c_q):
-                    pos_low_list.append(c_o)
+                    pos_low_max = max(c_o, pos_low_max)
                 elif (c_o > c_q):
-                    pos_up_list.append(n - r_o + 1)
+                    pos_up_max = max(n - r_o + 1, pos_up_max)
             #print("After Obstacles in positive slop %d " % moves)
         elif ((c_o + r_o) == (c_q + r_q)):
-            """ Obstacle in negative diagonal line """
+            """ Obstacle in negative slope diagonal line """
             if ((c_q + r_q) < (n + 1)):
                 if (c_o < c_q):
-                    neg_low_list.append(c_o)
+                    neg_low_max = max(c_o, neg_low_max)
                 elif (c_o > c_q):
-                    neg_up_list.append(r_o)
+                    neg_up_max = max(r_o, neg_up_max)
             elif ((c_q + r_q) >= (n + 1)):
                 if (c_o < c_q):
-                    neg_low_list.append(n - r_o + 1)
+                    neg_low_max = max(n - r_o + 1, neg_low_max)
                 elif (c_o > c_q):
-                    neg_up_list.append(n - c_o + 1)
+                    neg_up_max = max(n - c_o + 1, neg_up_max)
             #print("After Obstacles in negative slop %d " % moves)
-    moves -= max(h_low_list)
-    moves -= max(h_up_list)
-    moves -= max(v_low_list)
-    moves -= max(v_up_list)
-    moves -= max(pos_low_list)
-    moves -= max(pos_up_list)
-    moves -= max(neg_low_list)
-    moves -= max(neg_up_list)
+    moves -= h_low_max
+    moves -= h_up_max
+    moves -= v_low_max
+    moves -= v_up_max
+    moves -= pos_low_max
+    moves -= pos_up_max
+    moves -= neg_low_max
+    moves -= neg_up_max
     return moves
 
 
